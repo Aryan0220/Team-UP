@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { convexToJson, v } from "convex/values";
 import { mutation } from "./_generated/server";
 const images = [
     "/next.svg",
@@ -7,7 +7,7 @@ const images = [
 ];
 export const create = mutation({
     args:{
-        ordId: v.string(),
+        orgId: v.string(),
         title: v.string(),
     },
     handler: async (ctx, args) => {
@@ -18,11 +18,22 @@ export const create = mutation({
         const randomImage = images[Math.floor(Math.random() * images.length)];
         const board = await ctx.db.insert("boards", {
             title: args.title,
-            orgId: args.ordId,
+            orgId: args.orgId,
             authorId: identity.subject,
             authorName: identity.name!,
             imageUrl: randomImage,
         })
         return board;
+    }
+})
+
+export const remove = mutation({
+    args: {id: v.id("boards")},
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if(!identity) {
+            throw new Error("Unauthorized");
+        }
+        await ctx.db.delete(args.id);
     }
 })
