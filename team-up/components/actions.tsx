@@ -10,8 +10,12 @@ import {
     DropdownMenuItem,
     DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import { Link2, Trash2 } from "lucide-react";
+import { Link2, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { ConfirmModel } from "./confirm-model";
+import { Button } from "@/components/ui/button";
+import { useRenameModel } from "@/store/use-rename-model";
+
 
 interface ActionProps {
     children: React.ReactNode;
@@ -28,6 +32,7 @@ export const Actions = ({
     id,
     title,
 }: ActionProps) => {
+    const { onOpen } = useRenameModel();
     const {mutate, pending} = useApiMutation(api.board.remove);
     const onCopyLink = () => {
         navigator.clipboard.writeText(
@@ -54,12 +59,25 @@ export const Actions = ({
             >
                 <DropdownMenuItem className="p-3 cursor-pointer" onClick={onCopyLink}>
                     <Link2 className="h-4 w-4 mr-2" />
-                    Copy Board link
+                    Copy Board Link
                 </DropdownMenuItem>
-                <DropdownMenuItem className="p-3 cursor-pointer" onClick={onDelete}>
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Board
+                <DropdownMenuItem className="p-3 cursor-pointer" onClick={() => onOpen(id, title)}>
+                    <Pencil className="h-4 w-4 mr-2" />
+                    Rename Board
                 </DropdownMenuItem>
+                <ConfirmModel
+                    header="Delete Board?"
+                    description="This action will delete the board and all of its contents. It can not be reversed."
+                    disabled={pending}
+                    onConfirm={onDelete}
+                >
+                    <Button
+                    variant="ghost"
+                    className="p-3 cursor-pointer text-sm w-full justify-start font-normal">
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Delete Board
+                    </Button>
+                </ConfirmModel>
             </DropdownMenuContent>
         </DropdownMenu>
     )

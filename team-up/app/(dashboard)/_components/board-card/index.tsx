@@ -8,6 +8,9 @@ import { useAuth } from "@clerk/nextjs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Actions } from "@/components/actions";
 import { MoreHorizontal } from "lucide-react";
+import { useApiMutation } from "@/hooks/use-api-mutations";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
 
 interface BoradCardProps {
     id: string;
@@ -37,6 +40,28 @@ export const BoardCard = ({
         addSuffix: true,
     })
 
+    const { 
+        mutate: onFavourite,
+        pending: pendingFavourite,
+    } = useApiMutation(api.board.favourite);
+    const {
+        mutate: onUnfavourite,
+        pending: pendingUnfavourite,
+    } = useApiMutation(api.board.unfavourite);
+
+    const toggleFavourite = () => {
+        if(isFavourite){
+            onUnfavourite({ id })
+            .then(() => toast.success("Removed Board from Favourites"))
+            .catch(() => toast.error("Failed to unfavourite"))
+        }
+        else{
+            onFavourite({ id, orgId })
+            .then(() => toast.success("Board added to Favourites"))
+            .catch(() => toast.error("Failed to favourite"))
+        }
+    }
+
     return(
         <Link href={`/board/${id}`}>
             <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden">
@@ -65,8 +90,8 @@ export const BoardCard = ({
             title={title}
             authorLabel={authLabel}
             createdAtLabel={createdAtLabel}
-            onClick={() => {}}
-            disabled={false}
+            onClick={toggleFavourite}
+            disabled={pendingFavourite || pendingUnfavourite}
             />
             </div>
         </Link>
