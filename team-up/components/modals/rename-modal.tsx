@@ -38,7 +38,7 @@ const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         title,
     })
     .then(() => {
-        toast.success("Borad Renamed");
+        toast.success("Board Renamed");
         onClose();
     })
     .catch(() => toast.error("Failed to rename board"));
