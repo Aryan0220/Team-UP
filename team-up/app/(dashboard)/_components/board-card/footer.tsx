@@ -45,7 +45,6 @@ export const Footer = ({
                 )}
                 />
             </button>
-            Footer
         </div>
     )
 }
