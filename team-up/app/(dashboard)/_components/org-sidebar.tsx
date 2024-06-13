@@ -18,7 +18,7 @@ export const OrgSidebar = () => {
     const favourites = searchParams.get("favourites");
     return (
         <div className="hidden lg:flex flex-col space-y-6 w-[206px] pl-5 pt-5">
-            <Link href="/">
+            <Link href="https://team-up-liard.vercel.app/">
                 <div className="flex items-center gap-x-2">
                     <Image
                         src="/logo.svg"
@@ -61,7 +61,7 @@ export const OrgSidebar = () => {
                 size="lg"
                 className="font-normal justify-start px-2 w-full"
                 >
-                    <Link href="/">
+                    <Link href="https://team-up-liard.vercel.app/">
                         <LucideLayoutDashboard className="h-4 w-4 mr-2" />
                         Team Boards
                     </Link>
@@ -73,7 +73,7 @@ export const OrgSidebar = () => {
                 className="font-normal justify-start px-2 w-full"
                 >
                     <Link href={{
-                        pathname: "/",
+                        pathname: "https://team-up-liard.vercel.app/",
                         query: { favourites: true }
                     }}>
                         <Star className="h-4 w-4 mr-2" />
