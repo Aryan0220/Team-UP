@@ -46,3 +46,5 @@ export const Cursor = memo(({
         </foreignObject>
     )
 })
+
+Cursor.displayName = "Cursor";
