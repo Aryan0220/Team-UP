@@ -21,7 +21,7 @@ export const SearchInput = () => {
 
     useEffect(() => {
         const url = qs.stringifyUrl({
-            url: "https://team-up-liard.vercel.app/",
+            url: "/",
             query: {
                 search: debounceValue,
             },

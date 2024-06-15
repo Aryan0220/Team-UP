@@ -18,16 +18,15 @@ export const EmptyBorads = () => {
             orgId: organization.id,
             title: "Untitled"
         })
-        .then((id) => {
+        .then(() => {
             toast.success("Board Created");
-            router.push(`/borad/${id}`);
         })
         .catch(() => toast.error("Failed to create board"));
     }
     return(
         <div className="h-full flex flex-col items-center justify-center">
             <Image
-            src="/next.svg"
+            src="/logo.svg"
             height={140}
             width={140}
             alt="Empty"
